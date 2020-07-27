@@ -33,7 +33,7 @@ public class Cars: MonoBehaviour
                     new Vector3(positions[Random.Range(0, 2)], 0, 16), Quaternion.Euler(new Vector3(0, 180, 0)));
 
                 Instantiate(
-                cars[Random.Range(0, cars.Length)],
+                cars[Random.Range(1, cars.Length)],
                    new Vector3(positions[Random.Range(2, 4)], 0, 16), Quaternion.Euler(new Vector3(0, 180, 0)));
             }
             yield return new WaitForSeconds(0.65f);

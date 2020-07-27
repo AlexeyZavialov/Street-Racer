@@ -31,14 +31,14 @@ public class Cars_Potok: MonoBehaviour
             for (int i = 0; i < carsOnRoad.Length; i++)
                 if (carsOnRoad[i].transform.position.z > 13.5f) spawnB = false;           // Проверка, не мешают ли авто спавну
 
-            if (spawnB)
+            if (Player.speed >= 3f && spawnB)
             {
                 Instantiate(
                 cars[Random.Range(0, cars.Length)],
                     new Vector3(positions[Random.Range(0, 2)], 0, 16), Quaternion.Euler(new Vector3(0, 0, 0)));
 
                 Instantiate(
-                cars[Random.Range(0, cars.Length)],
+                cars[Random.Range(1, cars.Length)],
                    new Vector3(positions[Random.Range(2, 4)], 0, 16), Quaternion.Euler(new Vector3(0, 0, 0)));
 
             }

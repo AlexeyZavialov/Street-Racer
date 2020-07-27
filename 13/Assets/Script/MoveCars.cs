@@ -42,16 +42,24 @@ public class MoveCars : MonoBehaviour
     }
     void Update()
     {
-
+        
         float speed = Player.speed;
+        if (Player.s > 350)
+        {
+            speed *= 1.5f;
+        }
+        else if (Player.s > 600)
+        {
+            speed *= 1.5f;
+        }
 
         // Движение машины вверх/вниз  
-      
+
         switch (choice)
         {
             case 2: transform.Translate(Vector3.forward * (speed * -1.5f + IndexSpeed) * Time.deltaTime); break;
 
-            case 3: transform.Translate(Vector3.forward * (speed * 0.7f + IndexSpeed*0.8f) * Time.deltaTime); break;
+            case 3: transform.Translate(Vector3.forward * (speed * 0.5f + IndexSpeed*0.8f) * Time.deltaTime); break;
 
             case 0: speed = 0; break;
         }        
@@ -61,12 +69,7 @@ public class MoveCars : MonoBehaviour
         
         if ((transform.position.z > 17f || transform.position.z < -5f) && !playsound)
             Destroy(gameObject);
-
-
-      /*  // Поворот колёс
-        wheels = GameObject.FindGameObjectsWithTag("Wheel");
-        for (int i = 0; i < wheels.Length; i++)
-            wheels[i].transform.Rotate(speed, 0, 0);*/
+                      
     }
 
     private IEnumerator PlayOnDestroy()

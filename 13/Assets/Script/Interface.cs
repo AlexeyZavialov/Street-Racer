@@ -28,6 +28,7 @@ public class Interface : MonoBehaviour {
     [Space]
     public AudioMixerGroup MixerSounds;
     public Toggle togSounds;
+    private bool status = true;
 
     private void Start()
     {
@@ -209,5 +210,11 @@ public class Interface : MonoBehaviour {
         clickBrake = true;
         a = aBrake_ ;
         GameObject.Find("Player").GetComponent<Player>().IndexSp *= 3;
+    }
+
+    public void OffCar()
+    {
+        status = !status;
+        GameObject.Find("Player").GetComponent<Player>().PlayerCar.SetActive(status);
     }
 }

@@ -16,7 +16,7 @@ public class Menu : MonoBehaviour
     public GameObject SoundBG;
     public AudioSource SoundButton;
 
-    public static float money;                                  // Кол-во денег
+    public static int money;                                  // Кол-во денег
 
     public AudioMixerGroup MixerMusic;
     public AudioMixerGroup MixerSounds;
@@ -39,7 +39,7 @@ public class Menu : MonoBehaviour
     {
         // Загрузка данных о деньгах
         if (!PlayerPrefs.HasKey("money")) money = 0;
-        else money = PlayerPrefs.GetFloat("money");
+        else money = PlayerPrefs.GetInt("money");
 
         // Загрузка данных о музыке
         if (!PlayerPrefs.HasKey("musVolume")) musVolume = 0;
@@ -90,12 +90,14 @@ public class Menu : MonoBehaviour
 
     public void OnSettings()
     {
+        SoundButton.Play();
         panSettings.SetActive(true);
         panMenu.SetActive(false);
     }
 
     public void Back()
     {
+        SoundButton.Play();
         panSettings.SetActive(false);
         panMenu.SetActive(true);
     }
@@ -163,12 +165,14 @@ public class Menu : MonoBehaviour
         switch (toggle.isOn)
         {
             case true:
+                SoundButton.Play();
                 MixerMusic.audioMixer.SetFloat("MusicVolume", 0);
                 PlayerPrefs.SetFloat("musVolume", 0);
                 musVolume = 0;
                 break;
 
             case false:
+                SoundButton.Play();
                 MixerMusic.audioMixer.SetFloat("MusicVolume", -80);
                 PlayerPrefs.SetFloat("musVolume", -80);
                 musVolume = -80;
@@ -196,6 +200,10 @@ public class Menu : MonoBehaviour
 
     }
 
-
+    public void AddMoney()
+    {
+        money += 40000;
+        PlayerPrefs.SetInt("money", money);
+    }
 
 }

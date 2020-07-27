@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     public float IndexSp;                                      // Коэффицент скорости (отличительная особенность у машин)
     public float IndexSpCount;                                 // Сохранение начального коэфицента скорости
     public static float scor;                                  // Кол-во очков
-    public float money;
+    public int money;
 
     float hor1;                                                // Переменная для перемещения авто по Horizontal
     public static float speed;                                 // Скорость                             
@@ -118,7 +118,11 @@ public class Player : MonoBehaviour
 
         // Расчёт пройденного пути + вывод
         s = s + speed * Time.deltaTime;
-        count.text = s.ToString("#0") + "  / 1000 km" ;
+        if (PlayerPrefs.HasKey("money" + choice))
+        {
+            count.text = s.ToString("#0");
+        }
+        else count.text = s.ToString("#0") + "  / 1000 km" ;
         
        
         // Перемещение авто
@@ -198,28 +202,48 @@ public class Player : MonoBehaviour
 
             switch (choice)
             {
-                case 1: Fail_txt.text = "FAIL - 1 way";break;
+                case 1: 
+                    Fail_txt.text = "FAIL - 1 way";
+                    if (s >= 1000 && PlayerPrefs.GetString("money1") != "done")
+                    {                        
+                        PlayerPrefs.SetString("money1", "done");
+                    }
+                    break;
 
-                case 2: Fail_txt.text = "FAIL - Potok"; break;
+                case 2: 
+                    Fail_txt.text = "FAIL - Potok";
+                    if (s >= 1000 && PlayerPrefs.GetString("money2") != "done")
+                    {
+                        money += 5000;
+                        PlayerPrefs.SetString("money2", "done");
+                    }
+                    break;
 
-                case 3: Fail_txt.text = "FAIL - Vstrechka"; break;
+                case 3:
+                    Fail_txt.text = "FAIL - Vstrechka";
+                    if (s >= 1000 && PlayerPrefs.GetString("money3") != "done")
+                    {
+                        money += 10000;
+                        PlayerPrefs.SetString("money3", "done");
+                    }
+                    break;
             }
 
             money = Menu.money;                                        
-            money += scor / 10;                                         
+            money += (int)scor / 8;                                         
             moneyText.text = "$ " + money.ToString("#0");
             rezultScor.text += "     + $ " + (scor / 10).ToString("#0");
-            Menu.money = money;
-            PlayerPrefs.SetFloat("money", money);
+            Menu.money = (int) money;
+            PlayerPrefs.SetInt("money", money);
 
             // Загрузка Fail_Меню                       
             panelFail.SetActive(true);
         }
         
         // +100 Coin 
-        if (collider.tag == "Coin" && speed > 6f)        {
+        if (collider.tag == "Coin" && speed > 8f)        {
             
-            scor += 100;
+            scor += 8 * speed;
             scorText.color = new Color(255,255,0);
             Invoke("ColorChange", 0.3f);           
         }

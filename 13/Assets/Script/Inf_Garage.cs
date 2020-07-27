@@ -12,10 +12,12 @@ public class Inf_Garage : MonoBehaviour
     public GameObject car;                                         // Авто
     public GameObject[] cars = new GameObject[6];                  // Массив авто
     public Text moneyText;
-    public float money;
-    float[] price = new float[]{0, 450, 1200, 3000, 5000, 10000};
+    public int money;
+    int[] price = new int[]{0, 450, 1200, 3000, 0, 10000};
     public GameObject Zamok;
     public Text priceText;
+    public Button PlayButton;
+    public AudioSource SoundButton;
 
     public GameObject Left, Right;
 
@@ -51,6 +53,7 @@ public class Inf_Garage : MonoBehaviour
     }
     public void Back()
     {
+        SoundButton.Play();
         numCar = -1;
         SceneManager.LoadScene(0);
     }
@@ -65,14 +68,17 @@ public class Inf_Garage : MonoBehaviour
 
     public void Buy()
     {
-        if (Menu.money > price[numCar])
+        SoundButton.Play();
+        if (Menu.money > price[numCar] && numCar != 4)
         {
-            Zamok.SetActive(false); 
+            Zamok.SetActive(false);
+            PlayButton.interactable = true;
             PlayerPrefs.SetInt(numCar + "Car", 1);
             Menu.money -= price[numCar];
             moneyText.text = "$ " + Menu.money;
             PlayerPrefs.SetFloat("money", Menu.money);
         }
+            
     }
 
     public void Change(bool ch)
@@ -91,12 +97,25 @@ public class Inf_Garage : MonoBehaviour
                     if (PlayerPrefs.GetInt(numCar + "Car") == 0)
                     {
                         priceText.text = "$ " + price[numCar];
-                        if (numCar == 0) Zamok.SetActive(false);
-                             else Zamok.SetActive(true);
+                        if (numCar == 4)
+                        {
+                            priceText.text = " 1000 km ";
+                        }
+                        if (numCar == 0)
+                        {
+                            Zamok.SetActive(false);
+                            PlayButton.interactable = true;
+                        }
+                        else
+                        {
+                            Zamok.SetActive(true);
+                            PlayButton.interactable = false;
+                        }
                     }
                     else
                     {                        
                         Zamok.SetActive(false);
+                        PlayButton.interactable = true;
                     }
 
                 }break;
@@ -111,18 +130,37 @@ public class Inf_Garage : MonoBehaviour
 
                     if (PlayerPrefs.GetInt(numCar + "Car") == 0)
                     {
+                       
                         priceText.text = "$ " + price[numCar];
-                        if (numCar == 0) Zamok.SetActive(false);
-                        else Zamok.SetActive(true);
+                        if (numCar == 4)
+                        {
+                            priceText.text = " 1000 km ";
+                        }
+                        if (numCar == 0)
+                        {
+                            Zamok.SetActive(false);
+                            PlayButton.interactable = true;                           
+                        }
+                        else
+                        {
+                            Zamok.SetActive(true);
+                            PlayButton.interactable = false;
+                        }                        
                     }
                     else
                     {
                         Zamok.SetActive(false);
+                        PlayButton.interactable = true;
                     }
                 }
+                
                 break;
             }
-
+        if (PlayerPrefs.GetString("money1") == "done" && numCar == 4)
+        {
+            Zamok.SetActive(false);
+            PlayButton.interactable = true;            
+        }
     }
 
 }
