@@ -28,10 +28,22 @@ public class Interface : MonoBehaviour {
     [Space]
     public AudioMixerGroup MixerSounds;
     public Toggle togSounds;
-    private bool status = true;
+    private bool status;
+    public GameObject control_1;
+    public GameObject control_2;
 
     private void Start()
     {
+        if (!PlayerPrefs.HasKey("statusCotrol")) status = true;
+        //else 
+        if (PlayerPrefs.GetFloat("statusControl") == 1) status = true;
+        else if (PlayerPrefs.GetFloat("statusControl") == 0) status = false;
+        control_1.SetActive(status);
+        control_2.SetActive(!status);
+      //if (status) PlayerPrefs.SetFloat("statusControl", 1);
+       // else PlayerPrefs.SetFloat("statusControl", 0);
+
+
         CarAccel.enabled = true;
         CarUsuale.enabled = false;
 
@@ -215,6 +227,10 @@ public class Interface : MonoBehaviour {
     public void OffCar()
     {
         status = !status;
-        GameObject.Find("Player").GetComponent<Player>().PlayerCar.SetActive(status);
+        control_1.SetActive(status);
+        control_2.SetActive(!status);
+
+        if (status) PlayerPrefs.SetFloat("statusControl", 1);
+        else PlayerPrefs.SetFloat("statusControl", 0);
     }
 }

@@ -17,6 +17,7 @@ public class Menu : MonoBehaviour
     public AudioSource SoundButton;
 
     public static int money;                                  // Кол-во денег
+    bool status;
 
     public AudioMixerGroup MixerMusic;
     public AudioMixerGroup MixerSounds;
@@ -206,4 +207,15 @@ public class Menu : MonoBehaviour
         PlayerPrefs.SetInt("money", money);
     }
 
+    public void Status()
+    {
+        
+        if (!PlayerPrefs.HasKey("statusCotrol")) status = true;
+        
+        if (PlayerPrefs.GetFloat("statusControl") == 1) status = true;
+        else if (PlayerPrefs.GetFloat("statusControl") == 0) status = false;
+        status = !status;
+        if (status) PlayerPrefs.SetFloat("statusControl", 1);
+        else PlayerPrefs.SetFloat("statusControl", 0);
+    }
 }

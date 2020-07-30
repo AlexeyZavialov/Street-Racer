@@ -46,11 +46,11 @@ public class MoveCars : MonoBehaviour
         float speed = Player.speed;
         if (Player.s > 350)
         {
-            speed *= 1.5f;
+            speed *= 1.2f;
         }
         else if (Player.s > 600)
         {
-            speed *= 1.5f;
+            speed *= 1.3f;
         }
 
         // Движение машины вверх/вниз  
